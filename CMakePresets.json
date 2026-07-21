@@ -1,0 +1,52 @@
+{
+  "version": 9,
+  "cmakeMinimumRequired": {"major": 3, "minor": 28, "patch": 0},
+  "configurePresets": [
+    {
+      "name": "debug",
+      "displayName": "Debug",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_FLAGS": "-fsanitize=address,undefined -fno-omit-frame-pointer -Wall -Wextra -Wpedantic",
+        "BUILD_TESTS": "ON",
+        "LOADMON_USE_TUI": "ON",
+        "LOADMON_USE_JSON": "ON"
+      }
+    },
+    {
+      "name": "release",
+      "displayName": "Release",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_INTERPROCEDURAL_OPTIMIZATION": "ON",
+        "BUILD_TESTS": "OFF",
+        "LOADMON_USE_TUI": "ON",
+        "LOADMON_USE_JSON": "ON"
+      }
+    },
+    {
+      "name": "cli-only",
+      "displayName": "CLI Only (no TUI)",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/cli",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "BUILD_TESTS": "ON",
+        "LOADMON_USE_TUI": "OFF",
+        "LOADMON_USE_JSON": "ON"
+      }
+    }
+  ],
+  "buildPresets": [
+    {"name": "debug", "configurePreset": "debug"},
+    {"name": "release", "configurePreset": "release"},
+    {"name": "cli-only", "configurePreset": "cli-only"}
+  ],
+  "testPresets": [
+    {"name": "debug", "configurePreset": "debug", "output": {"verbosity": "verbose"}}
+  ]
+}
